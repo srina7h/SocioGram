@@ -10,7 +10,12 @@ import org.springframework.stereotype.Service;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
-    public void add(User user){
 
+    public void add(User user) {
+        userRepository.save(user);
+
+    }
+    public void update(User user){
+        userRepository.save(user);
     }
 }
