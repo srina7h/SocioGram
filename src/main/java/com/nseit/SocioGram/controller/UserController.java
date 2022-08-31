@@ -1,7 +1,6 @@
 package com.nseit.SocioGram.controller;
 
-import com.nseit.SocioGram.model.Post;
-import com.nseit.SocioGram.model.User;
+import com.nseit.SocioGram.model.SocioUser;
 import com.nseit.SocioGram.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,11 +11,11 @@ public class UserController {
     @Autowired
     private UserService userService;
     @PostMapping
-    public void add(@RequestBody User user) {
+    public void add(@RequestBody SocioUser user) {
         userService.add(user);
     }
     @PutMapping
-    public void update(@RequestBody User user) {
+    public void update(@RequestBody SocioUser user) {
         userService.update(user);
     }
 //    @GetMapping

@@ -2,9 +2,7 @@ package com.nseit.SocioGram.controller;
 
 
 import com.nseit.SocioGram.model.Post;
-import com.nseit.SocioGram.model.User;
 import com.nseit.SocioGram.service.PostService;
-import com.nseit.SocioGram.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
