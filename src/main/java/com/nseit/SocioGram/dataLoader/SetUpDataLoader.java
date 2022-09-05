@@ -33,7 +33,7 @@ public class SetUpDataLoader implements ApplicationListener<ContextRefreshedEven
 
         // Create user roles
 //        var userRole = createRoleIfNotFound(Role.ROLE_USER);
-        Role adminRole = createRoleIfNotFound(Role.ROLE_ADMIN);
+        Role adminRole = createRoleIfNotFound(Role.ROLE_USER);
 
         // Create users
         createUserIfNotFound("admin", adminRole);
@@ -54,12 +54,13 @@ public class SetUpDataLoader implements ApplicationListener<ContextRefreshedEven
 
     @Transactional
     private SocioUser createUserIfNotFound(final String name, final Role role) {
-        SocioUser user = userRepository.findByUserName(name);
-        if (user == null) {
-            user = new SocioUser(name, bCryptPasswordEncoder.encode("admin"));
-            user.setRoles(Set.of(role));
-            user = userRepository.save(user);
-        }
-        return user;
+//        SocioUser user = userRepository.findByName(name);
+//        if (user == null) {
+//            user = new SocioUser(name, bCryptPasswordEncoder.encode("admin"));
+//            user.setRoles(Set.of(role));
+//            user = userRepository.save(user);
+//        }
+//        return user;
+        return null;
     }
 }

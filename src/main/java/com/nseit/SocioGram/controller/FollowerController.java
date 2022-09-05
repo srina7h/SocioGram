@@ -1,4 +1,5 @@
 package com.nseit.SocioGram.controller;
 
-public class UserController {
+public class FollowerController {
+
 }

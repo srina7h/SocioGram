@@ -23,11 +23,22 @@ public class SocioUser {
     public String password;
     public String email;
     public Long phoneNumber;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "socioUser")
+    private Set<Follower> userId;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "followerUser")
+    private Set<Follower> followerId;
+
+    @JsonIgnore
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_post",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "post_id"))
     private List<Post> post;
+
     @ManyToMany
     @JsonIgnore
     @Cascade({org.hibernate.annotations.CascadeType.ALL})
@@ -35,6 +46,18 @@ public class SocioUser {
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
     private Set<Role> roles;
 
+    @JsonIgnore
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "like_post",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "post_id"))
+    private List<Post> likePost;
+
+
     public SocioUser(String name, String password) {
+        this.name = name;
+        this.password = password;
     }
+
+
 }

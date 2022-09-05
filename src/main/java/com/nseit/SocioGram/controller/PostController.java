@@ -7,20 +7,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/post")
+@RequestMapping("/api/post")
 public class PostController {
     @Autowired
     private PostService postService;
 
     @PostMapping
-    public void add(@RequestBody Post post) {
+    public void uploadPost(@RequestBody Post post) {
+       // Post post1= new
 
         postService.add(post);
     }
 
     @PutMapping
-    public void update(@RequestBody Post post) {
+    public void editPost(@RequestBody Post post) {
 
         postService.update(post);
     }
+    @GetMapping
+    public void viewPost(){
+        postService.viewPosts();
+    }
+
+    @DeleteMapping
+    public void deletePost(int id){
+        postService.delete(id);
+    }
+
 }

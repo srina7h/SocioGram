@@ -1,5 +1,6 @@
 package com.nseit.SocioGram.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,14 +9,14 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
-@Table(name = "posts")
+@Table(name = "post")
 public class Post {
     @Id
     @GeneratedValue
@@ -23,9 +24,15 @@ public class Post {
     public String image;
     public String details;
     @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
     public LocalDateTime dateTime;
-    @ManyToMany(mappedBy = "post")
+    @JsonIgnore
+    @ManyToMany(mappedBy = "post",cascade = CascadeType.ALL)
     private List<SocioUser> user;
+    @JsonIgnore
+    @ManyToMany(mappedBy = "likePost",cascade = CascadeType.ALL)
+    private List<SocioUser> follower;
 
+    public Post() {
+        this.dateTime = LocalDateTime.now();
+    }
 }
