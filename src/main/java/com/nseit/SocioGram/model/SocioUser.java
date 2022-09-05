@@ -33,10 +33,7 @@ public class SocioUser {
     private Set<Follower> followerId;
 
     @JsonIgnore
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_post",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "post_id"))
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Post> post;
 
     @ManyToMany

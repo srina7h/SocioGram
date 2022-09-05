@@ -2,8 +2,12 @@ package com.nseit.SocioGram.controller;
 
 
 import com.nseit.SocioGram.model.Post;
+import com.nseit.SocioGram.request.PostRequest;
+import com.nseit.SocioGram.response.APIResponse;
 import com.nseit.SocioGram.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,11 +16,16 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-    @PostMapping
-    public void uploadPost(@RequestBody Post post) {
-       // Post post1= new
+    @Autowired
+    private APIResponse apiResponse;
 
-        postService.add(post);
+    @PostMapping
+    public ResponseEntity<APIResponse> uploadPost(@RequestBody PostRequest postRequest) {
+        Post post = postService.add(postRequest);
+
+        apiResponse.setStatus(HttpStatus.CREATED.value());
+        apiResponse.setData(post);
+        return new ResponseEntity<>(apiResponse, HttpStatus.CREATED);
     }
 
     @PutMapping
@@ -24,13 +33,14 @@ public class PostController {
 
         postService.update(post);
     }
+
     @GetMapping
-    public void viewPost(){
+    public void viewPost() {
         postService.viewPosts();
     }
 
     @DeleteMapping
-    public void deletePost(int id){
+    public void deletePost(int id) {
         postService.delete(id);
     }
 

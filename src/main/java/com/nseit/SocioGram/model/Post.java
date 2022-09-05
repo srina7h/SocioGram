@@ -20,14 +20,15 @@ import java.util.List;
 public class Post {
     @Id
     @GeneratedValue
-    public Integer id;
-    public String image;
-    public String details;
+    private Integer id;
+    private String image;
+    private String details;
     @CreationTimestamp
-    public LocalDateTime dateTime;
+    private LocalDateTime dateTime;
     @JsonIgnore
-    @ManyToMany(mappedBy = "post",cascade = CascadeType.ALL)
-    private List<SocioUser> user;
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private SocioUser user;
     @JsonIgnore
     @ManyToMany(mappedBy = "likePost",cascade = CascadeType.ALL)
     private List<SocioUser> follower;
