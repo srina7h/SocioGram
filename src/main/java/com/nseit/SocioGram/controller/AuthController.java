@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(value = {"http://localhost:3000/"})
 @RequestMapping("/api/auth")
 public class AuthController {
 
@@ -22,34 +23,30 @@ public class AuthController {
     private APIResponse apiResponse;
 
     @PostMapping("/register")
-    public ResponseEntity<SocioUser> register(@RequestBody SocioUser socioUser) {
-        APIResponse apiResponse = new APIResponse();
+    public ResponseEntity<APIResponse> register(@RequestBody SocioUser socioUser) {
         SocioUser registeredUser = authService.registerAsUser(socioUser);
-        if (registeredUser == null) {
-            throw new ResourceNotFoundException("Unable to register User");
-        }
-        return new ResponseEntity<>(registeredUser, HttpStatus.CREATED);
+        apiResponse.setStatus(HttpStatus.CREATED.value());
+        apiResponse.setData(registeredUser);
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
     @PostMapping("/login")
     public ResponseEntity<APIResponse> login(@RequestBody SocioUser socioUser) {
-        APIResponse apiResponse = new APIResponse();
         SocioUser loggedInUser = authService.loginAsUser(socioUser);
-        if (loggedInUser == null) {
-            throw new ResourceNotFoundException("User Not found");
-        }
         apiResponse.setStatus(HttpStatus.OK.value());
         apiResponse.setData(loggedInUser);
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<SocioUser>> getAllUsers() {
+    public ResponseEntity<APIResponse> getAllUsers() {
         List<SocioUser> socioUsers = authService.getAllUsers();
         if (socioUsers.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(socioUsers, HttpStatus.OK);
+        apiResponse.setStatus(HttpStatus.OK.value());
+        apiResponse.setData(socioUsers);
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
 

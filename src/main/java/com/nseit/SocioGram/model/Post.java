@@ -25,10 +25,17 @@ public class Post {
     private String details;
     @CreationTimestamp
     private LocalDateTime dateTime;
+
+//    @JsonIgnore
+    @OneToOne
+    @JoinColumn(name = "file_id", referencedColumnName = "id")
+    private File file;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private SocioUser user;
+
     @JsonIgnore
     @ManyToMany(mappedBy = "likePost",cascade = CascadeType.ALL)
     private List<SocioUser> follower;

@@ -8,4 +8,5 @@ public class PostRequest {
     private String image;
     private String details;
     private Integer userId;
+    private Integer fileId;
 }
